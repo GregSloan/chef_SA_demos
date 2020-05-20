@@ -34,7 +34,12 @@ The delivery method in the demo is a GitLab CI pipeline. The easiest way to oper
 6. Click "Expand" next to "Runners"
 7. Scroll down to "Set up a group Runner manually"
 8. Take note of the token value in the section. It will be used during deployment of the environment
-9. 
+9. Return to the CI/CD settings page of your new group
+10. Expand "Variables"
+11. Click green "Add Variable" button
+12. Key = "auth_token", value = [your Hab origin auth token]
+13. Check the "Mask Variable" box
+14. Click "Add variable"
 
 Next step is to get the necessary repos forked into your new group
 
@@ -80,3 +85,21 @@ Repeat for Effortless Config package if building your own
 
 Follow deployment instructions at <https://gitlab.com/compliance_automation/deploy>. You will need the token from step 8 of the GitLab setup, the origins and package names of the Effortless packages you'll be using, and the waiver_source_location from Waiver Files above.
 
+## Running Compliance Automation Demo
+
+### Add new compliance control
+
+1. Log in to Automate dashboard and show current compliance state.
+2. Describe a new control that security might want to impose on the environment
+3. Add the control to the Effortless Audit repo, commit and push the changes
+4. Browse to CI/CD Pipeline for the Effortless Audit project to show the artifact being built
+5. Use pipeline to promote to 'dev' channel
+6. Show in Automate dashboard that the 'dev' nodes have picked up the new control
+7. Promote to 'prod' channel via pipeline
+
+### Create waiver
+
+1. Explain that security has approved a waiver for the new control either for one of the environments, or for a particular server
+2. Update the relevant toml file in the waiver file repository
+3. On next scheduled Chef Client run, the change will be picked up and Audit will run automatically
+4. Show in Automate dashboard that the control was waived.
